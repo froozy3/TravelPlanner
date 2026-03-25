@@ -5,12 +5,11 @@ services:
     ports:
       - "8000:8000"
     environment:
-      # Override is optional (project has a default), but makes behavior explicit.
-      - DATABASE_URL=sqlite+aiosqlite:///./travel_planner.db
+      # Named Docker volumes are directories only — DB file lives inside this path.
+      - DATABASE_URL=sqlite+aiosqlite:////app/data/travel_planner.db
     volumes:
-      - travel_planner_db:/app/travel_planner.db
+      - travel_planner_data:/app/data
     restart: unless-stopped
 
 volumes:
-  travel_planner_db:
-
+  travel_planner_data:

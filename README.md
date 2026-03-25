@@ -6,7 +6,7 @@ REST API for trip projects and places, integrated with the [Art Institute of Chi
 
 ## Assessment scope & bonus items
 
-This project was built for a **Travel Planner** backend test (CRUD REST API, SQLite, Art Institute of Chicago API for place validation, business rules: 1–10 places per project, no duplicate external IDs per project, project deletion blocked if any place is visited, `is_completed` when all places are visited).
+This project was built for a **Travel Planner** backend test (CRUD REST API, SQLite, Art Institute of Chicago API for place validation, business rules: **1–10 places per project** on create, no duplicate external IDs per project, project deletion blocked if any place is visited, `is_completed` when all places are visited). **`POST /api/v1/projects/` requires `places_ids`** (at least one id, max ten).
 
 **Bonus requirements — what is implemented**
 
@@ -127,6 +127,8 @@ Create a `.env` file in the project root (see `app/core/config.py`):
 |----------------|---------|
 | `DATABASE_URL` | `sqlite+aiosqlite:///./travel_planner.db` |
 | `PROJECT_NAME` | `Travel Planner API` |
+
+**Docker Compose:** the DB file is stored under a named volume mounted at `/app/data` (see `docker-compose.yml`). The container sets `DATABASE_URL=sqlite+aiosqlite:////app/data/travel_planner.db` so SQLite uses that path. Do not mount a Docker volume directly onto a single file path — volumes are directories.
 
 ## Project layout
 

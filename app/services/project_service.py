@@ -77,13 +77,13 @@ class ProjectService:
         return list(result.scalars().all())
 
     async def create(self, *, obj_in: ProjectCreate) -> ProjectDB:
+        place_ids = obj_in.places_ids
         validations_tasks = [
-            self.art_institute_client.validate_place(pid)
-            for pid in obj_in.places_ids or []
+            self.art_institute_client.validate_place(pid) for pid in place_ids
         ]
         results: list[bool] = await asyncio.gather(*validations_tasks)
 
-        for pid, result in zip(obj_in.places_ids, results):
+        for pid, result in zip(place_ids, results):
             if not result:
                 raise ValueError(f"Place {pid} is not valid")
         project_data = obj_in.model_dump(exclude={"places_ids"})
@@ -92,7 +92,7 @@ class ProjectService:
         self.db.add(project)
         await self.db.flush()
 
-        for pid in obj_in.places_ids:
+        for pid in place_ids:
             new_place = PlaceDB(external_id=pid, project_id=project.id)
             self.db.add(new_place)
 
