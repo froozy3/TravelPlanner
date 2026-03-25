@@ -1,0 +1,25 @@
+.venv/
+venv/
+
+__pycache__/
+*.py[cod]
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+.env
+
+logs/
+*.log
+
+# SQLite DB (and other local DB files)
+*.db
+*.sqlite
+*.sqlite3
+
+# Editor / OS
+.DS_Store
+

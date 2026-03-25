@@ -1,0 +1,16 @@
+services:
+  api:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    environment:
+      # Override is optional (project has a default), but makes behavior explicit.
+      - DATABASE_URL=sqlite+aiosqlite:///./travel_planner.db
+    volumes:
+      - travel_planner_db:/app/travel_planner.db
+    restart: unless-stopped
+
+volumes:
+  travel_planner_db:
+
